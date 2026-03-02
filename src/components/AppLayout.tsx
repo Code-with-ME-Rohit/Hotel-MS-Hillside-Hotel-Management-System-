@@ -8,8 +8,10 @@ import {
   BarChart3,
   Settings,
   Hotel,
+  LogOut,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, to: "/" },
@@ -26,6 +28,8 @@ interface AppLayoutProps {
 }
 
 const AppLayout = ({ children }: AppLayoutProps) => {
+  const { user, signOut } = useAuth();
+
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
@@ -60,6 +64,18 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             </NavLink>
           ))}
         </nav>
+
+        {user && (
+          <div className="px-4 pb-2">
+            <button
+              onClick={signOut}
+              className="flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              Sign Out
+            </button>
+          </div>
+        )}
 
         <div className="p-4 border-t border-sidebar-border">
           <div className="text-[10px] text-sidebar-foreground/40 text-center leading-relaxed">
